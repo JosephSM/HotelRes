@@ -300,6 +300,9 @@ def initialize_dummy_data():
         c.execute(f"insert into location(hotelid, name, i,j) values ('{hotelid}','{location}','{i}','{j}')")
     with create_connection(db) as c:
         c.execute(f"insert into location(hotelid, name, i,j) values ('{hotelid}','{location2}','{i2}','{j2}')")
+    with create_connection(db) as c:
+        c.execute(f"insert into reservation(startdate,enddate,roomid,custid) values ('{startdate}','{enddate}','{roomid}','{custid}')")
+
 
 
 if __name__ == '__main__':
