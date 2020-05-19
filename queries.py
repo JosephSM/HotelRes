@@ -53,7 +53,7 @@ def create_db_and_tables():
             CREATE TABLE if not exists room(
                 id integer primary key,
                 locationid integer not null,
-                type integer not null,
+                type text not null,
                 price real not null,
                 foreign key(locationid) references location(id)
             )
