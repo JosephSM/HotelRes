@@ -12,6 +12,14 @@ app.secret_key = "hello"
 def tiara():
     return render_template("Hotel.htm")
 
+@app.route("/ReservationDetails")
+def reservationdetails():
+    return render_template("ReservationDetails.html")
+
+@app.route("/AccountDetails")
+def accountdetails():
+    return render_template("AccountDetails.html")
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
