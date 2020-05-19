@@ -53,8 +53,7 @@ def create_db_and_tables():
             CREATE TABLE if not exists room(
                 id integer primary key,
                 locationid integer not null,
-                roomnumber integer not null,
-                size integer,
+                type integer not null,
                 price real not null,
                 foreign key(locationid) references location(id)
             )
@@ -307,6 +306,11 @@ def future_reservations_by_admin(admin, date):
         data = c.fetchall()
     return data
 
+
+def drop_table(table):
+    with create_connection(db) as c:
+        c.execute(f"drop table if exists {table}")
+
 def initialize_dummy_data():
     hotelid = 0
     hotel, location = "Hilton", "New York"
@@ -332,4 +336,5 @@ if __name__ == '__main__':
     # print(select_all_hotels())
     # print(select_all_locations())
     # print(select_all_rooms())
-    print(select_all_rooms_by_chain(1))
+    # print(select_all_rooms_by_chain(1))
+    create_db_and_tables()
