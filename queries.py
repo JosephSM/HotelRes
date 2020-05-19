@@ -118,6 +118,11 @@ def insert_new_rooms(rooms):
         for locid, rn, size, price in rooms:
             c.execute(f"insert into room (locationid,roomnumber,size,price) values ({locid},{rn},{size},{price})")
 
+def updated_insert_new_rooms(rooms):
+    with create_connection(db) as c:
+        c.execute(f"insert into room (locationid,type,price) values ({locid},{rt},{price})")
+
+
 #SELECT
 def select_all_locations():
     with create_connection(db) as c:
@@ -244,6 +249,17 @@ def hotel_id_from_name(name):
             f"""select id
             from hotel
             where hotel.name = '{name}'
+            """)
+        data = c.fetchone()
+    return data[0]
+
+def hotel_id_from_admin(name):
+    with create_connection(db) as c:
+        c.execute(
+            f"""select hotel.id
+            from hotel
+            inner join admin on hotel.id = admin.hotelid
+            where admin.username = '{name}'
             """)
         data = c.fetchone()
     return data[0]
