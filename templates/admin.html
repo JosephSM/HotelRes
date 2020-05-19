@@ -61,7 +61,7 @@
   <h3>Add Location</h3>
   <table class="table">
         <td colspan="4">   
-          <form class="form-inline">
+          <form class="form-inline" method="post" action="/admin_add_loc">
             <!-- <div class="form-group mb-2">
               <label for="staticEmail2" class="sr-only">Price</label>
               <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="Price">
@@ -120,16 +120,7 @@
  	  	if(document.getElementById("iloc").value.length == 0||document.getElementById("jloc").value.length == 0||document.getElementById("name").value.length == 0
  	  		||document.getElementById("cs").value.length == 0||document.getElementById("cr").value.length == 0||document.getElementById("es").value.length == 0
  	  		||document.getElementById("er").value.length == 0)
- 	  		alert("All fields are required. Try again")
-
- 	  	// not sure if I can directly call location_in_db
- 	  	if(location_in_db(document.getElementById("iloc"),document.getElementById("jloc")))
- 	  		alert("Location already in use. Please add your hotel at a different location");
- 	  	else
- 	  	{
- 	  		//insert_new_location(document.getElementById("hotelid"), document.getElementById("name"), document.getElementById("iloc"), document.getElementById("jloc"));
- 	  		//insert_new_rooms();
- 	  	}
+ 	  		alert("All fields are required. Try again");
  	};
 
 

@@ -147,6 +147,17 @@ def location_in_db(i, j):
         data = c.fetchone()
     return data
 
+def get_locationid_from_cords(i, j):
+    with create_connection(db) as c:
+        c.execute(
+            f"""select id
+            from location
+            where location.i = '{i}'
+            and location.j = '{j}'
+            """)
+        data = c.fetchone()
+    return data[0]
+
 def select_all_hotels():
     with create_connection(db) as c:
         c.execute(
