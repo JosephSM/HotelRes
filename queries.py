@@ -252,38 +252,30 @@ def hotel_id_from_name(name):
 def select_rooms_search_criteria():
     pass
 
-def current_reservations_by_admin(hotel, date):
+def current_reservations_by_admin(admin, date):
     with create_connection(db) as c:
         c.execute(f"""
-            select c.first-name, c.last-name, r.start-date, r.end-date, a.room-number
-            from reservation as r
-            join customer as c 
-            on c.id = r.cust-id
-            join room as a 
-            on r.room-id = a.id
-            join location as l
-            on a.location-id = l.id
-            join admin as b
-            on b.hotel-id = a.hotel-id
-            where b.hotel-id = '{hotel}' and r.end-date >= '{date}'
+            select customer.firstname, customer.lastname, reservation.startdate, reservation.enddate, room.roomnumber
+            from reservation
+            inner join customer on customer.id = reservation.custid
+            inner join room on reservation.roomid = room.id
+            inner join location on room.locationid = location.id
+            inner join admin on admin.hotelid = location.hotelid
+            where admin.username = '{admin}' and reservation.enddate >= '{date}'
             """)
         data = c.fetchall()
     return data
 
-def future_reservations_by_admin(hotel, date):
+def future_reservations_by_admin(admin, date):
     with create_connection(db) as c:
         c.execute(f"""
-            select c.first-name, c.last-name, r.start-date, r.end-date, a.room-number
-            from reservation as r
-            join customer as c 
-            on c.id = r.cust-id
-            join room as a 
-            on r.room-id = a.id
-            join location as l
-            on a.location-id = l.id
-            join admin as b
-            on b.hotel-id = a.hotel-id
-            where b.hotel-id = '{hotel}' and r.start-date < '{date}'
+            select customer.firstname, customer.lastname, reservation.startdate, reservation.enddate, room.roomnumber
+            from reservation
+            inner join customer on customer.id = reservation.custid
+            inner join room on reservation.roomid = room.id
+            inner join location on room.locationid = location.id
+            inner join admin on admin.hotelid = location.hotelid
+            where admin.username = '{admin}' and reservation.startdate < '{date}'
             """)
         data = c.fetchall()
     return data
