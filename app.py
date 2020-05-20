@@ -34,7 +34,9 @@ def logout():
     session.pop("user", None)
     session.pop("userid", None)
     session.pop("date", None)
+    session.pop("date_display", None)
     session.pop("admin", None)
+    session.pop("hotelid", None)
     return render_template("home.html")
 
 
@@ -109,9 +111,10 @@ def admin():
             session["admin"] = un
             session["date"] = date.today()
             session["date_display"] = date.today().strftime("%D")
+            session["hotelid"] = hotel_id_from_admin(un)
             return render_template("admin.html")
-        return redirect(url_for("home"))
-    return render_template("admin.html")
+        # return redirect(url_for("home"))
+    return render_template("admin_login.html")
 
 @app.route("/register_admin", methods=["GET","POST"])
 def register_admin():
@@ -126,18 +129,52 @@ def register_admin():
             insert_new_admin(un,pw,idn)
     return render_template("admin.html")
 
+@app.route("/admin_add_loc", methods=["GET","POST"])
+def admin_add_loc():
+    if request.method == "POST":
+        name = request.form["name"]
+        icord = request.form["iloc"]
+        jcord = request.form["jloc"]
+        cheapNum = request.form["cs"]
+        cheapRate = request.form["cr"]
+        expensiveNum = request.form["es"]
+        expensiveRate = request.form["er"]
+        # check that location isn't in use
+        if not location_in_db(icord, jcord):
+            # insert new location
+            insert_new_location(session["hotelid"],name,icord,jcord)
+            # grab new location id
+            locid = get_locationid_from_cords(icord, jcord)
+            # insert all cheap rooms
+            x = 0
+            while x < int(cheapNum):
+                updated_insert_new_room(locid, "Cheap", cheapRate)
+                x += 1
+            # insert all expensive rooms
+            x = 0
+            while x < int(expensiveNum):
+                updated_insert_new_room(locid, "Expensive", expensiveRate)
+                x += 1
+
+    return render_template("admin.html")
+
+
 # Returning Data
 @app.route("/getAllLocations")
 def getAllLocations():
     return json.dumps(select_all_locations())
 
-@app.route("/getAdminCurrentReservations")
-def getAdminCurrentReservations(hotel, date):
-    return json.dumps(current_reservations_by_hotel_owner(hotel, date))
+@app.route("/getAllCurrent")
+def getAllCurrent():
+    return json.dumps(current_reservations_by_admin(session["admin"], session["date"]))
 
-@app.route("/getAdminFutureReservations")
-def getAdminFutureReservations(hotel, date):
-    return json.dumps(future_reservations_by_hotel_owner(hotel, date))
+@app.route("/getAllFuture")
+def getAllFuture():
+    return json.dumps(future_reservations_by_admin(session["admin"], session["date"]))
+
+
+
+
     
 # @app.route("/login")
 # def login_and_register():

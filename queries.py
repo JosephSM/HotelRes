@@ -53,8 +53,7 @@ def create_db_and_tables():
             CREATE TABLE if not exists room(
                 id integer primary key,
                 locationid integer not null,
-                roomnumber integer not null,
-                size integer,
+                type text not null,
                 price real not null,
                 foreign key(locationid) references location(id)
             )
@@ -110,13 +109,18 @@ def insert_new_admin(username, password, hotelid):
 
 def insert_new_location(hotel, name, i,j):
     with create_connection(db) as c:
-        c.execute(f"insert into location values ({hotel},{name},{i},{j})")
+        c.execute(f"insert into location values (null,'{hotel}','{name}','{i}','{j}')")
 
 
 def insert_new_rooms(rooms):
     with create_connection(db) as c:
         for locid, rn, size, price in rooms:
             c.execute(f"insert into room (locationid,roomnumber,size,price) values ({locid},{rn},{size},{price})")
+
+def updated_insert_new_rooms(rooms):
+    with create_connection(db) as c:
+        c.execute(f"insert into room (locationid,type,price) values ({locid},{rt},{price})")
+
 
 #SELECT
 def select_all_locations():
@@ -141,6 +145,17 @@ def location_in_db(i, j):
             """)
         data = c.fetchone()
     return data
+
+def get_locationid_from_cords(i, j):
+    with create_connection(db) as c:
+        c.execute(
+            f"""select id
+            from location
+            where location.i = '{i}'
+            and location.j = '{j}'
+            """)
+        data = c.fetchone()
+    return data[0]
 
 def select_all_hotels():
     with create_connection(db) as c:
@@ -247,46 +262,54 @@ def hotel_id_from_name(name):
             """)
         data = c.fetchone()
     return data[0]
+
+def hotel_id_from_admin(name):
+    with create_connection(db) as c:
+        c.execute(
+            f"""select hotel.id
+            from hotel
+            inner join admin on hotel.id = admin.hotelid
+            where admin.username = '{name}'
+            """)
+        data = c.fetchone()
+    return data[0]
     
 
 def select_rooms_search_criteria():
     pass
 
-def current_reservations_by_hotel_owner(hotel, date):
+def current_reservations_by_admin(admin, date):
     with create_connection(db) as c:
         c.execute(f"""
-            select c.first-name, c.last-name, r.start-date, r.end-date, a.room-number
-            from reservation as r
-            join customer as c 
-            on c.id = r.cust-id
-            join room as a 
-            on r.room-id = a.id
-            join location as l
-            on a.location-id = l.id
-            join admin as b
-            on b.hotel-id = a.hotel-id
-            where b.hotel-id = '{hotel}' and r.end-date >= '{date}'
+            select customer.firstname, customer.lastname, reservation.startdate, reservation.enddate, room.roomnumber
+            from reservation
+            inner join customer on customer.id = reservation.custid
+            inner join room on reservation.roomid = room.id
+            inner join location on room.locationid = location.id
+            inner join admin on admin.hotelid = location.hotelid
+            where admin.username = '{admin}' and reservation.enddate >= '{date}'
             """)
-        data = c.fetchone()
+        data = c.fetchall()
     return data
 
-def future_reservations_by_hotel_owner(hotel, date):
+def future_reservations_by_admin(admin, date):
     with create_connection(db) as c:
         c.execute(f"""
-            select c.first-name, c.last-name, r.start-date, r.end-date, a.room-number
-            from reservation as r
-            join customer as c 
-            on c.id = r.cust-id
-            join room as a 
-            on r.room-id = a.id
-            join location as l
-            on a.location-id = l.id
-            join admin as b
-            on b.hotel-id = a.hotel-id
-            where b.hotel-id = '{hotel}' and r.start-date < '{date}'
+            select customer.firstname, customer.lastname, reservation.startdate, reservation.enddate, room.roomnumber
+            from reservation
+            inner join customer on customer.id = reservation.custid
+            inner join room on reservation.roomid = room.id
+            inner join location on room.locationid = location.id
+            inner join admin on admin.hotelid = location.hotelid
+            where admin.username = '{admin}' and reservation.startdate < '{date}'
             """)
-        data = c.fetchone()
+        data = c.fetchall()
     return data
+
+
+def drop_table(table):
+    with create_connection(db) as c:
+        c.execute(f"drop table if exists {table}")
 
 def initialize_dummy_data():
     hotelid = 0
@@ -313,4 +336,5 @@ if __name__ == '__main__':
     # print(select_all_hotels())
     # print(select_all_locations())
     # print(select_all_rooms())
-    print(select_all_rooms_by_chain(1))
+    # print(select_all_rooms_by_chain(1))
+    create_db_and_tables()
