@@ -113,8 +113,8 @@ def admin():
             session["date_display"] = date.today().strftime("%D")
             session["hotelid"] = hotel_id_from_admin(un)
             return render_template("admin.html")
-        return redirect(url_for("home"))
-    return render_template("admin.html")
+        # return redirect(url_for("home"))
+    return render_template("admin_login.html")
 
 @app.route("/register_admin", methods=["GET","POST"])
 def register_admin():
