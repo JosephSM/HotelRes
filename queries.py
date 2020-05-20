@@ -92,6 +92,11 @@ def create_db_and_tables():
             )
         """)
 
+#####################################
+        c.execute("""
+            INSERT INTO reservation(id,startdate,enddate,roomid,custid) VALUES (0,5202020,5212020,0,0)
+        """)
+
 #INSERT
 def insert_new_user(firstname, lastname, username, password):
     with create_connection(db) as c:
@@ -294,18 +299,13 @@ def initialize_dummy_data():
     i, j = 20, 15
     hotel2, location2 = "Hilton", "San Francisco"
     i2, j2 = 2, 11
-    startdate = 5192020
-    enddate = 5202020
-    roomid = 3
-    custid = 2
+
     with create_connection(db) as c:
         c.execute(f"insert into hotel(name) values ('{hotel}')")
     with create_connection(db) as c:
         c.execute(f"insert into location(hotelid, name, i,j) values ('{hotelid}','{location}','{i}','{j}')")
     with create_connection(db) as c:
         c.execute(f"insert into location(hotelid, name, i,j) values ('{hotelid}','{location2}','{i2}','{j2}')")
-    with create_connection(db) as c:
-        c.execute(f"insert into reservation(startdate,enddate,roomid,custid) values ('{startdate}','{enddate}','{roomid}','{custid}')")
 
 
 
