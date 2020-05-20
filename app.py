@@ -34,7 +34,9 @@ def logout():
     session.pop("user", None)
     session.pop("userid", None)
     session.pop("date", None)
+    session.pop("date_display", None)
     session.pop("admin", None)
+    session.pop("hotelid", None)
     return render_template("home.html")
 
 
@@ -110,7 +112,6 @@ def admin():
             session["date"] = date.today()
             session["date_display"] = date.today().strftime("%D")
             session["hotelid"] = hotel_id_from_admin(un)
-
             return render_template("admin.html")
         return redirect(url_for("home"))
     return render_template("admin.html")
