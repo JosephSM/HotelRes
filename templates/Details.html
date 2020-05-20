@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
    <head>
-   	<meta charset="utf-8">
+    <meta charset="utf-8">
       <title>Account Details</title>
-      <!--<link rel="stylesheet" href="style4.css">-->
+      <!--<link rel="stylesheet" type="text/css" href="style4.css">-->
       <style>
-                  .button{
+         .button{
             font-size: 20px;
             /*border-radius: 6px;*/
             transition-duration: 0.4s;
@@ -179,7 +179,8 @@
       </style>
    </head>
    <body>
-            <!--NAVBAR STARTS-->
+
+      <!--NAVBAR STARTS-->
       <div class="navbar">
          <a href="#home">Map</a>
          <div class="subnav">
@@ -213,47 +214,13 @@
 
 
 
+      <h1>Welcome to your account</h1>
+      <div class="form-body">
+         <div class="row">
+            <button class="button" onclick="location.href='AccountDetails'" type="button">View Account Details</button>
 
-
-
-   	<h1>Reservations - <span style="font-size:.7em;color:darkblue">{{session["user"]}}</span></h1>
-<h2>this page should only be visible after a user has logged in</h2>
-<ol>
-  <li>user should only see his/her reservations</li>
-  <li>booking or canceling should only be done on search engine page or hotel page</li>
-</ol>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Hotel</th>
-      <th scope="col">Address</th>
-      <th scope="col">Room #</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><i>Pull Hotel Name</i></td>
-      <td><i>Pull Address</i></td>
-      <td><i>Pull Room #</i></td>
-      <td><input class="button" type="button" onclick="" value="Cancel Reservation" /></td>
-    </tr>
-    <tr>
-      <td><i>Pull Hotel Name</i></td>
-      <td><i>Pull Address</i></td>
-      <td><i>Pull Room #</i></td>
-      <td><input class="button" type="button" onclick="" value="Cancel Reservation" /></td>
-
-    </tr>
-    <tr>
-      <td><i>Pull Hotel Name</i></td>
-      <td><i>Pull Address</i></td>
-      <td><i>Pull Room #</i></td>
-      <td><input class="button" type="button" onclick="" value="Cancel Reservation" /></td>
-
-    </tr>
-  </tbody>
-</table>
-<input class="button" type="button" onclick="window.location.replace('Details')" value="Return" />
-
+            <button class="button" onclick="location.href='ReservationDetails'" type="button">View Reservation Details</button>
+         </div>
+      </div>
    </body>
 </html>

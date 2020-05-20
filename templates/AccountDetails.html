@@ -215,12 +215,23 @@
 
 
 
-
+      {{% if name %}}
+      {% for firstname,lastname,username,password in name%}
    	<h1>My Profile</h1>
-      <p>Firstname: </p>
-      <p>Lastname: </p>
-      <p>Account Email: </p>
-      <p>Account Credit Card: </p>
-      <input class="button" type="button" onclick="window.location.replace('index.html')" value="Return" />
+      <p>Firstname: {{firstname}}</p>
+      <p>Lastname: {{lastname}}</p>
+      <p>Username: {{username}}</p>
+      <p>Password: {{password}}</p>
+      {% endfor %}
+
+      {% else %}
+      <h1>My Profile</h1>
+      <p>Firstname: <i>not available</i></p>
+      <p>Lastname: <i>not available</i></p>
+      <p>Username: <i>not available</i></p>
+      <p>Password: <i>not available</i></p>
+      {% endif %}
+
+      <input class="button" type="button" onclick="window.location.replace('Details')" value="Return" />
    </body>
 </html>
