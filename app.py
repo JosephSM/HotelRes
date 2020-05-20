@@ -148,11 +148,13 @@ def admin_add_loc():
             # insert all cheap rooms
             x = 0
             while x < int(cheapNum):
+                print("cheapTest")
                 updated_insert_new_room(locid, "Cheap", cheapRate)
                 x += 1
             # insert all expensive rooms
             x = 0
             while x < int(expensiveNum):
+                print("exTest")
                 updated_insert_new_room(locid, "Expensive", expensiveRate)
                 x += 1
 

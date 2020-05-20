@@ -117,14 +117,14 @@ def insert_new_rooms(rooms):
         for locid, rn, size, price in rooms:
             c.execute(f"insert into room (locationid,roomnumber,size,price) values ({locid},{rn},{size},{price})")
 
-def updated_insert_new_rooms(rooms):
+def updated_insert_new_room(locid, rt, price):
     with create_connection(db) as c:
-        c.execute(f"insert into room (locationid,type,price) values ({locid},{rt},{price})")
+        c.execute(f"insert into room values (null, '{locid}','{rt}','{price}')")
 
 
 #SELECT
 def select_all_locations():
-    with create_connection(db) as c:
+    with create_connection(db) as c: 
         c.execute(
             """select b.name, a.name, a.i, a.j
             from location as a
@@ -281,7 +281,7 @@ def select_rooms_search_criteria():
 def current_reservations_by_admin(admin, date):
     with create_connection(db) as c:
         c.execute(f"""
-            select customer.firstname, customer.lastname, reservation.startdate, reservation.enddate, room.roomnumber
+            select customer.firstname, customer.lastname, reservation.startdate, reservation.enddate, room.id
             from reservation
             inner join customer on customer.id = reservation.custid
             inner join room on reservation.roomid = room.id
