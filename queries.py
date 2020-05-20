@@ -290,7 +290,7 @@ def future_reservations_by_hotel_owner(hotel, date):
 
 def search_hotel(hotelname, hoteltype, costmin, costmax):
     with create_connection(db) as c:
-        c.execute)f"""
+        c.execute(f"""
         select * 
         from room
         join location

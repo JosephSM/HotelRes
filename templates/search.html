@@ -1,7 +1,5 @@
-<html>
-  
-<body>
-
+{% extends "layout.html" %}
+{% block content %}
 <style>
     
     #outPopUp {
@@ -15,19 +13,18 @@
   color: black;
 
 }
- 
-    </style>
+</style>
  <div id="outPopUp" >
-<form method="post" action="/search">
+   <form method="post" action="/search">
 
           <div  style= "position: relative; left: 100px;"><h2>Search</h2></div> 
      <select name="hotels" id="hotels"> 
-          <option  disabled selected>Select Your Hotel:</option>
+       <option  disabled selected>Select Your Hotel:</option>
           <option value='Hotel1'>Hotel1</option>;
           <option value='Hotel2'>Hotel2</option>;
           <option value='Hotel3'>Hotel3</option>;
 
-    </select> 
+        </select> 
     <select name="hoteltype" id="hoteltype"> 
           <option  disabled selected>Select Your Type:</option>
           <option value='Standard'>Standard</option>;
@@ -38,8 +35,7 @@
     <input name="costmin" id="costmin" size="15" placeholder="Cost Minimum" required>   
     <input name="costmax" id="costmax" size="15" placeholder="Cost Maximum" required>   
     <br />
-                  <input type="submit">
-</form>
-    </div>
-</body>
-</html>
+    <input type="submit">
+  </form>
+</div>
+{% endblock content %}

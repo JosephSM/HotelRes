@@ -7,20 +7,31 @@ import json
 app = Flask(__name__)
 app.secret_key = "hello"
 
+
+
+
+
+
+
 @app.route("/search", methods=["GET","POST"])
 def search():
     if request.method == "POST":
-         hotelname = request.form["hotels"]
-         hoteltype = request.form["hoteltype"]
-         costmin = request.form["costmin"]
-         costmax = request.form["costmax"]
-    return json.dumps(search_hotel(hotelname, hoteltype, costmin, costmax))
+        hotelname = request.form["hotels"]
+        hoteltype = request.form["hoteltype"]
+        costmin = request.form["costmin"]
+        costmax = request.form["costmax"]
+        return json.dumps(search_hotel(hotelname, hoteltype, costmin, costmax))
+    return render_template("search.html")
 
 
 
 @app.route("/tiara")
 def tiara():
     return render_template("Hotel.htm")
+
+@app.route("/welcome")
+def welcome():
+    return render_template("welcome.html")
 
 
 @app.route("/login", methods=["GET", "POST"])

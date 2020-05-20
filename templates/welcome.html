@@ -1,79 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>Hotel Welcome</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+{% extends "layout.html" %}
+{% block content %}
 <style>
-
-.center {
-  margin: auto;
-  width: 60%;
-  border: 3px solid #73AD21;
-  padding: 10px;
-}
-    
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-    background-color: darkturquoise;
-}
-
-/* Style the header */
-.header {
-  background-color: turquoise;
-  padding: 20px;
-  text-align: center;
-}
-    
-
-    
-/* The popup form - hidden by default */
-.form-popup {
-  display: none;
-  position: fixed;
-     
-  left: 20%;
-  bottom: 0;
-  right: 0px;
-  border: 3px solid #f1f1f1;
-  z-index: 9;
-}
-
- .big {
-     height: 200px;
-     width: 200px;
- }
-
-
-.column {
-  float: left;
-  width: 33.33%;
-  padding: 15px;
-}
-
-
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-
-@media screen and (max-width:600px) {
-  .column {
-    width: 100%;
+  .column{
+    margin-left: 15px;
   }
-}
 </style>
-</head>
-<body>
 
 <div class="header">
-  <h1>Hotels</h1>
+  <h1>Welcome!</h1>
 </div>
 
 <div class="row">
@@ -81,7 +15,8 @@ body {
     <h2>First Franchise</h2>
       <p>
     <a href="hoteltest.html">
-<img border="0" alt="W3Schools" src="choice1.jpg" width="300" height="300">
+      
+<img border="0" alt="W3Schools" src="{{url_for('static', filename='choice1.jpg')}}" width="300" height="300">
           </a></p>
   </div>
   
@@ -89,7 +24,7 @@ body {
     <h2>Second Franchise</h2>
         <p>
     <a href="hoteltest.html">
-<img border="0" alt="W3Schools" src="choice2.jpg" width="300" height="300">
+      <img border="0" alt="W3Schools" src="{{url_for('static', filename='choice2.jpg')}}" width="300" height="300">
           </a></p>
   </div>
   
@@ -97,7 +32,7 @@ body {
     <h2>Third Franchise</h2>
         <p>
     <a href="hoteltest.html">
-<img border="0" alt="W3Schools" src="choice3.jpg" width="300" height="300">
+      <img border="0" alt="W3Schools" src="{{url_for('static', filename='choice3.jpg')}}" width="300" height="300">
           </a></p>
   </div>
 </div>
@@ -131,5 +66,4 @@ function closeForm() {
 }
 </script>
 
-</body>
-</html>
+{% endblock content %}
