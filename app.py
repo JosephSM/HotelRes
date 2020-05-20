@@ -7,6 +7,16 @@ import json
 app = Flask(__name__)
 app.secret_key = "hello"
 
+@app.route("/search", methods=["GET","POST"])
+def search():
+    if request.method == "POST":
+         hotelname = request.form["hotels"]
+         hoteltype = request.form["hoteltype"]
+         costmin = request.form["costmin"]
+         costmax = request.form["costmax"]
+    return json.dumps(search_hotel(hotelname, hoteltype, costmin, costmax))
+
+
 
 @app.route("/tiara")
 def tiara():

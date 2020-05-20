@@ -288,6 +288,24 @@ def future_reservations_by_hotel_owner(hotel, date):
         data = c.fetchone()
     return data
 
+def search_hotel(hotelname, hoteltype, costmin, costmax):
+    with create_connection(db) as c:
+        c.execute)f"""
+        select * 
+        from room
+        join location
+        on room.locationid = location.id
+        join hotel
+        on location.hotelid = hotel.id
+        where hotel.name = '{hotelname}'
+        and hotel.type = '{hoteltype}'
+        and room.price >= '{costmin}'
+        and room.price <= '{costmax}'
+        """)
+        data = c.fetchall()
+    return data
+
+
 def initialize_dummy_data():
     hotelid = 0
     hotel, location = "Hilton", "New York"
@@ -300,6 +318,8 @@ def initialize_dummy_data():
         c.execute(f"insert into location(hotelid, name, i,j) values ('{hotelid}','{location}','{i}','{j}')")
     with create_connection(db) as c:
         c.execute(f"insert into location(hotelid, name, i,j) values ('{hotelid}','{location2}','{i2}','{j2}')")
+
+
 
 
 if __name__ == '__main__':
