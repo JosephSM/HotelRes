@@ -24,6 +24,19 @@ def reservationdetails():
     return render_template("ReservationDetails.html")
     return render_template("Details.html")
 
+@app.route("/welcome")
+def welcome():
+    return render_template("welcome.html")
+
+@app.route("/search", methods=["GET","POST"])
+def search():
+    if request.method == "POST":
+        hotelname = request.form["hotels"]
+        hoteltype = request.form["hoteltype"]
+        costmin = request.form["costmin"]
+        costmax = request.form["costmax"]
+        return json.dumps(search_hotel(hotelname, hoteltype, costmin, costmax))
+    return render_template("search.html")
 
 
 

@@ -92,11 +92,6 @@ def create_db_and_tables():
             )
         """)
 
-#####################################
-        c.execute("""
-            INSERT INTO reservation(id,startdate,enddate,roomid,custid) VALUES (0,5202020,5212020,0,0)
-        """)
-
 #INSERT
 def insert_new_user(firstname, lastname, username, password):
     with create_connection(db) as c:
@@ -293,19 +288,37 @@ def future_reservations_by_hotel_owner(hotel, date):
         data = c.fetchone()
     return data
 
+def search_hotel(hotelname, hoteltype, costmin, costmax):
+    with create_connection(db) as c:
+        c.execute(f"""
+        select * 
+        from room
+        join location
+        on room.locationid = location.id
+        join hotel
+        on location.hotelid = hotel.id
+        where hotel.name = '{hotelname}'
+        and hotel.type = '{hoteltype}'
+        and room.price >= '{costmin}'
+        and room.price <= '{costmax}'
+        """)
+        data = c.fetchall()
+    return data
+
+
 def initialize_dummy_data():
     hotelid = 0
     hotel, location = "Hilton", "New York"
     i, j = 20, 15
     hotel2, location2 = "Hilton", "San Francisco"
     i2, j2 = 2, 11
-
     with create_connection(db) as c:
         c.execute(f"insert into hotel(name) values ('{hotel}')")
     with create_connection(db) as c:
         c.execute(f"insert into location(hotelid, name, i,j) values ('{hotelid}','{location}','{i}','{j}')")
     with create_connection(db) as c:
         c.execute(f"insert into location(hotelid, name, i,j) values ('{hotelid}','{location2}','{i2}','{j2}')")
+
 
 
 
