@@ -109,7 +109,7 @@ def insert_new_admin(username, password, hotelid):
 
 def insert_new_location(hotel, name, i,j):
     with create_connection(db) as c:
-        c.execute(f"insert into location values ({hotel},{name},{i},{j})")
+        c.execute(f"insert into location values (null,'{hotel}','{name}','{i}','{j}')")
 
 
 def insert_new_rooms(rooms):

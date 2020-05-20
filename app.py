@@ -129,7 +129,7 @@ def register_admin():
     return render_template("admin.html")
 
 @app.route("/admin_add_loc", methods=["GET","POST"])
-def register_admin():
+def admin_add_loc():
     if request.method == "POST":
         name = request.form["name"]
         icord = request.form["iloc"]
@@ -146,12 +146,12 @@ def register_admin():
             locid = get_locationid_from_cords(icord, jcord)
             # insert all cheap rooms
             x = 0
-            while x < cheapNum:
+            while x < int(cheapNum):
                 updated_insert_new_room(locid, "Cheap", cheapRate)
                 x += 1
             # insert all expensive rooms
             x = 0
-            while x < expensiveNum:
+            while x < int(expensiveNum):
                 updated_insert_new_room(locid, "Expensive", expensiveRate)
                 x += 1
 
